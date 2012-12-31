@@ -36,17 +36,7 @@ utmc: utmc.o tape.o localizer.o copier.o head_mover.o
 clean:
 	rm -f -r *.o
 
-$(SOURCE)%.o: $(SOURCE)%.c $(SOURCE)%.h
-	@echo "#---------------------------"
-	@echo "# Generando $@"
-	@echo "# Depende de $^"
-	@echo "# Ha cambiado $<"
-	$(CC) $(CFLAGS) -c $<
-
 tape_test: tape.o tape_test.o
 	@echo "#---------------------------"
 	@./ejercicio1 -tamanio 100 -clave 2
-
-ejercicio2_test:
-	@echo Ejecutando ejercicio2
 
