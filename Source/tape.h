@@ -47,7 +47,7 @@ status move_right_tape(Tape* tape);
 
 status move_left_tape(Tape* tape);
 
-void print_tape(Tape* tape);
+void print_tape(Tape* tape, unsigned int len);
 
 void end_tape(Tape* tape);
 

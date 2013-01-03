@@ -19,11 +19,14 @@
 
 
 CC = gcc -ansi -pedantic
-CFLAGS = -Wall -O3
-#CFLAGS = -Wall -g
+#CFLAGS = -Wall -O3
+CFLAGS = -Wall -g
 EXE = utmc
 SOURCE = ./Source/
 TEST = ./Test/
+BUILD = ./Build/
+
+test: test_tape.exe
 
 utmc: utmc.o tape.o localizer.o copier.o head_mover.o
 	@echo "#---------------------------"
@@ -34,9 +37,17 @@ utmc: utmc.o tape.o localizer.o copier.o head_mover.o
 
 .PHONY: clean
 clean:
-	rm -f -r *.o
+	rm -f -r *.o 
 
-tape_test: tape.o tape_test.o
+test_tape.exe: $(BUILD)tape.o $(BUILD)test_tape.o
 	@echo "#---------------------------"
-	@./ejercicio1 -tamanio 100 -clave 2
+	$(CC) $(CFLAGS) -o $@ $(BUILD)tape.o $(BUILD)test_tape.o
+
+$(BUILD)tape.o: $(SOURCE)tape.c
+	@echo "#---------------------------"
+	$(CC) $(CFLAGS) -c -o $@ $(SOURCE)tape.c 
+
+$(BUILD)test_tape.o: $(TEST)test_tape.c
+	@echo "#---------------------------"
+	$(CC) $(CFLAGS) -c -o $@ $(TEST)test_tape.c 
 

@@ -50,7 +50,7 @@ status ini_tape(Tape* tape, char* values)
 
 	memcpy(tape->start, values, len);
 
-	tape->end = tape->start + len;
+	tape->end = tape->start + len - 1;
 
 	for (i = 0; i < len && tape->start[i] != 'M'; i++);
 
@@ -84,6 +84,34 @@ char read_tape(Tape* tape)
 	return *(tape->head);
 }
 
+status realloc_tape_right(Tape* tape)
+{
+	assert(tape != NULL);
+	assert(tape->start != NULL);
+	assert(tape->head != NULL);
+	assert(tape->end != NULL);
+
+	char* temp;
+	int len = tape->end - tape->start + 2; /* 1 for the actual length, and another for the new */
+
+	temp = (char *) malloc(len * sizeof(temp[0]));
+
+	if (temp == NULL)
+		return ERR;
+
+	memcpy(temp, tape->start, (len - 1) * sizeof(temp[0]));
+
+	free(tape->start);
+
+	tape->start = temp;
+	tape->end = temp + (len - 1);
+	tape->head = tape->end;
+
+	*tape->head = '0';
+
+	return OK;
+} 
+
 status move_right_tape(Tape* tape)
 {
 	assert(tape != NULL);
@@ -92,29 +120,38 @@ status move_right_tape(Tape* tape)
 	assert(tape->end != NULL);
 
 	if (tape->head == tape->end)
-	{
-		char* temp;
-		int tam = tape->end - tape->start + 1;
-		int i;
-
-		temp = (char *) malloc(tam * sizeof(temp[0]));
-
-		if (temp == NULL)
-			return ERR;
-
-		temp[tam - 1] = '0';
-
-		for (i = 0; i < tam; i++)
-			temp[i] = tape->start[i];
-
-		free(tape->start);
-
-		tape->start = temp;
-		tape->end = temp + tam;
-		tape->head = temp + tam - 1;
-	}
+		return realloc_tape_right(tape);
 
 	tape->head++;
+
+	return OK;
+}
+
+
+status realloc_tape_left(Tape* tape)
+{
+	assert(tape != NULL);
+	assert(tape->start != NULL);
+	assert(tape->head != NULL);
+	assert(tape->end != NULL);
+
+	char* temp;
+	int len = tape->end - tape->start + 2; /* 1 for the actual length, and another for the new */
+
+	temp = (char *) malloc(len * sizeof(temp[0]));
+
+	if (temp == NULL)
+		return ERR;
+
+	memcpy(temp + 1, tape->start, (len - 1) * sizeof(temp[0]));
+
+	free(tape->start);
+
+	tape->start = temp;
+	tape->end = temp + (len - 1);
+	tape->head = tape->start;
+
+	*tape->head = '0';
 
 	return OK;
 }
@@ -127,40 +164,28 @@ status move_left_tape(Tape* tape)
 	assert(tape->end != NULL);
 
 	if (tape->head == tape->start)
-	{
-		char* temp;
-		int tam = tape->end - tape->start + 1;
-		int i;
-
-		temp = (char *) malloc(tam * sizeof(temp[0]));
-
-		if (temp == NULL)
-			return ERR;
-
-		temp[0] = '0';
-
-		for (i = 1; i < tam; i++)
-			temp[i] = tape->start[i - 1];
-
-		free(tape->start);
-
-		tape->start = temp;
-		tape->end = temp + tam;
-		tape->head = temp + 1;
-	}
+		return realloc_tape_left(tape);
 
 	tape->head--;
 
 	return OK;
 }
 
-void print_tape(Tape* tape)
+
+void print_tape(Tape* tape, unsigned int len)
 {
-	printf("____________________________________________\n");
-
-	printf("To be implemented\n");
+	char* temp;
 
 	printf("____________________________________________\n");
+
+	printf("|");
+
+	for (temp = tape->start; temp <= tape->end; temp++)
+		printf("%c|", *temp);
+
+	printf("\n");
+
+	printf("--------------------------------------------\n");
 
 	return;
 }

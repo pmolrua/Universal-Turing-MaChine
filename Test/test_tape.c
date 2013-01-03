@@ -19,12 +19,10 @@
 **************************************************************/
 
 
-#include "tape.h"
+#include "../Source/tape.h"
 
 int main(int argc, char const *argv[])
 {
-	int i;
-	
 	Tape* tape;
 
 	tape = new_tape();
@@ -36,23 +34,88 @@ int main(int argc, char const *argv[])
 
 	move_right_tape(tape);
 
-	move_right_tape(tape);
-
-	write_tape(tape, 'J');
+	write_tape(tape, 'A');
 
 	move_right_tape(tape);
 
-	for (i = 1; i < 21; i++)
-	{
-		printf("%c|", read_tape(tape));
+	write_tape(tape, 'B');
 
-		if (i % 10 == 0)
-			printf("\n");
+	move_right_tape(tape);
 
-		move_left_tape(tape);
-	}
+	print_tape(tape, 0);
 
 	printf("\n");
+
+	end_tape(tape);
+
+	tape = new_tape();
+
+	if (tape == NULL)
+		return 1;
+
+	ini_tape(tape, "M1234567890");
+
+	move_left_tape(tape);
+
+	write_tape(tape, 'A');
+
+	move_left_tape(tape);
+
+	write_tape(tape, 'B');
+
+	move_left_tape(tape);
+
+	print_tape(tape, 0);
+
+	tape = new_tape();
+
+	if (tape == NULL)
+		return 1;
+
+	ini_tape(tape, "M");
+
+	move_left_tape(tape);
+	move_left_tape(tape);
+	move_left_tape(tape);
+	move_left_tape(tape);
+	move_left_tape(tape);
+	move_left_tape(tape);
+	move_left_tape(tape);
+	move_left_tape(tape);
+	move_left_tape(tape);
+	move_left_tape(tape);
+	move_left_tape(tape);
+	move_left_tape(tape);
+	move_left_tape(tape);
+
+	print_tape(tape, 0);
+
+	end_tape(tape);
+
+	tape = new_tape();
+
+	if (tape == NULL)
+		return 1;
+
+	ini_tape(tape, "M");
+
+	move_right_tape(tape);
+	move_right_tape(tape);
+	move_right_tape(tape);
+	move_right_tape(tape);
+	move_right_tape(tape);
+	move_right_tape(tape);
+	move_right_tape(tape);
+	move_right_tape(tape);
+	move_right_tape(tape);
+	move_right_tape(tape);
+	move_right_tape(tape);
+	move_right_tape(tape);
+	move_right_tape(tape);
+
+	print_tape(tape, 0);
+
+	end_tape(tape);
 
 	return 0;
 }
