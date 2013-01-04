@@ -8,4 +8,6 @@ I'm creating this for educational purposes. The objective it's to code a Univers
 
 It's gonna be written in C. Clean and easy to understand code will be chosen before optimal code.
 
-It published under a GNU General Public License. If you don't know what that means (??), you can learn more at http://www.gnu.org/licenses/#GPL 
+It published under a GNU General Public License. If you don't know what that means (??), you can learn more at http://www.gnu.org/licenses/#GPL or in the file included in the main directory.
+
+Some manuals will be provided in the future. Please, stand by.

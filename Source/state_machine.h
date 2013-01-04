@@ -23,7 +23,8 @@
 
 #include "tape.h"
 
-typedef void* (* state_function) (Tape*);
+typedef int (* state_function)(Tape*);	  				/* generic function pointer */
+typedef state_function (* p_state_function)(Tape*);
 	
 #include "localizer.h"
 #include "copier.h"

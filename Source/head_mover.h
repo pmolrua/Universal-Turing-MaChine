@@ -24,16 +24,16 @@
 #include "state_machine.h"
 #include "tape.h"
 
-void* hea_0_A (Tape* tape);
-void* hea_0_B (Tape* tape);
-void* hea_1	(Tape* tape);
-void* hea_2	(Tape* tape);
-void* hea_3	(Tape* tape);
-void* hea_4_0 (Tape* tape);
-void* hea_4_1 (Tape* tape);
-void* hea_5_0 (Tape* tape);
-void* hea_5_1 (Tape* tape);
-void* hea_6_A (Tape* tape);
-void* hea_6_B (Tape* tape);
+state_function hea_0_A (Tape* tape);
+state_function hea_0_B (Tape* tape);
+state_function hea_1	(Tape* tape);
+state_function hea_2	(Tape* tape);
+state_function hea_3	(Tape* tape);
+state_function hea_4_0 (Tape* tape);
+state_function hea_4_1 (Tape* tape);
+state_function hea_5_A (Tape* tape);
+state_function hea_5_B (Tape* tape);
+state_function hea_6_0 (Tape* tape);
+state_function hea_6_1 (Tape* tape);
 
 #endif

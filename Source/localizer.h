@@ -24,12 +24,12 @@
 #include "state_machine.h"
 #include "tape.h"
 
-void* ini (Tape* tape);
-void* loc_0 (Tape* tape);
-void* loc_1_A (Tape* tape);
-void* loc_1_B (Tape* tape);
-void* loc_2 (Tape* tape);
-void* loc_3 (Tape* tape);
-void* halt (Tape* tape);
+state_function ini (Tape* tape);
+state_function loc_0 (Tape* tape);
+state_function loc_1_A (Tape* tape);
+state_function loc_1_B (Tape* tape);
+state_function loc_2 (Tape* tape);
+state_function loc_3 (Tape* tape);
+state_function halt (Tape* tape);
 
 #endif

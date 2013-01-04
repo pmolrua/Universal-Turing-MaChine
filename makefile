@@ -21,33 +21,60 @@
 CC = gcc -ansi -pedantic
 #CFLAGS = -Wall -O3
 CFLAGS = -Wall -g
-EXE = utmc
 SOURCE = ./Source/
 TEST = ./Test/
 BUILD = ./Build/
 
-test: test_tape.exe
-
-utmc: utmc.o tape.o localizer.o copier.o head_mover.o
+utmc.app: $(BUILD)utmc.o $(BUILD)tape.o $(BUILD)localizer.o $(BUILD)copier.o $(BUILD)head_mover.o $(BUILD)io.o
 	@echo "#---------------------------"
 	@echo "# Building $@"
-	@echo "# Depends on $^"
-	@echo "# Has been modified $<"
-	$(CC) $(CFLAGS) -o $@ utmc.o tape.o localizer
+	$(CC) $(CFLAGS) -o $@ $(BUILD)utmc.o $(BUILD)tape.o $(BUILD)localizer.o $(BUILD)copier.o $(BUILD)head_mover.o $(BUILD)io.o
 
-.PHONY: clean
-clean:
-	rm -f -r *.o 
-
-test_tape.exe: $(BUILD)tape.o $(BUILD)test_tape.o
+$(BUILD)utmc.o: $(SOURCE)utmc.c
 	@echo "#---------------------------"
-	$(CC) $(CFLAGS) -o $@ $(BUILD)tape.o $(BUILD)test_tape.o
+	$(CC) $(CFLAGS) -c -o $@ $(SOURCE)utmc.c 
 
 $(BUILD)tape.o: $(SOURCE)tape.c
 	@echo "#---------------------------"
 	$(CC) $(CFLAGS) -c -o $@ $(SOURCE)tape.c 
 
+$(BUILD)localizer.o: $(SOURCE)localizer.c
+	@echo "#---------------------------"
+	@echo "# Compiling $@"
+	$(CC) $(CFLAGS) -c -o $@ $(SOURCE)localizer.c 
+
+$(BUILD)copier.o: $(SOURCE)copier.c
+	@echo "#---------------------------"
+	@echo "# Compiling $@"
+	$(CC) $(CFLAGS) -c -o $@ $(SOURCE)copier.c
+
+$(BUILD)head_mover.o: $(SOURCE)head_mover.c
+	@echo "#---------------------------"
+	@echo "# Compiling $@"
+	$(CC) $(CFLAGS) -c -o $@ $(SOURCE)head_mover.c 
+
+$(BUILD)io.o: $(SOURCE)io.c
+	@echo "#---------------------------"
+	@echo "# Compiling $@"
+	$(CC) $(CFLAGS) -c -o $@ $(SOURCE)io.c 
+
+
+# Tests
+
+tests: test_tape.exe
+
+test_tape.app: $(BUILD)tape.o $(BUILD)test_tape.o
+	@echo "#---------------------------"
+	$(CC) $(CFLAGS) -o $@ $(BUILD)tape.o $(BUILD)test_tape.o
+
 $(BUILD)test_tape.o: $(TEST)test_tape.c
 	@echo "#---------------------------"
 	$(CC) $(CFLAGS) -c -o $@ $(TEST)test_tape.c 
+
+
+# The other stuff
+
+.PHONY: clean
+clean:
+	rm -f -r *.o 
 

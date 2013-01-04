@@ -52,12 +52,12 @@ status ini_tape(Tape* tape, char* values)
 
 	tape->end = tape->start + len - 1;
 
-	for (i = 0; i < len && tape->start[i] != 'M'; i++);
+	for (i = 0; i < len && tape->start[i] != 'X'; i++);
 
-	if (i == len && tape->start[i] != 'M')
+	if (i == len && tape->start[i] != 'X')
 	{
 		free(tape->start);
-		fprintf(stderr, "ERROR: No 'M' in the tape.\n");
+		fprintf(stderr, "ERROR: No 'X' in the tape.\n");
 		return ERR;
 	}
 
@@ -86,11 +86,6 @@ char read_tape(Tape* tape)
 
 status realloc_tape_right(Tape* tape)
 {
-	assert(tape != NULL);
-	assert(tape->start != NULL);
-	assert(tape->head != NULL);
-	assert(tape->end != NULL);
-
 	char* temp;
 	int len = tape->end - tape->start + 2; /* 1 for the actual length, and another for the new */
 
@@ -130,11 +125,6 @@ status move_right_tape(Tape* tape)
 
 status realloc_tape_left(Tape* tape)
 {
-	assert(tape != NULL);
-	assert(tape->start != NULL);
-	assert(tape->head != NULL);
-	assert(tape->end != NULL);
-
 	char* temp;
 	int len = tape->end - tape->start + 2; /* 1 for the actual length, and another for the new */
 
