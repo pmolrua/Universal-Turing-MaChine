@@ -97,3 +97,36 @@ void end_arguments(ARGUMENTS* arg)
 	free(arg->output_file);
 	free(arg);
 }
+
+char* read_tape_from_file(ARGUMENTS* arg)
+{
+	char* tape = NULL;
+	char buf[BUFSIZ];
+	FILE* f;
+
+	assert(arg != NULL);
+	assert(arg->input_file != NULL);
+
+	f = fopen(arg->input_file, "r");
+
+	if (f == NULL)
+		return NULL;
+
+	while(fgets(buf, BUFSIZ, f) != NULL)
+	{
+		int i, j;
+		int buf_tam = strlen(buf);
+
+		for (i = 0, j = 0; i < buf_tam; i++)
+		{
+
+		}
+
+	}
+
+
+
+	fclose(f);
+
+	return tape;
+}
