@@ -1,7 +1,7 @@
 /**************************************************************
 
 	Universal Turing MaChine
-	Copyright (C) 2013  Pablo Molins
+	Copyright (C) 2013  Pablo Molins - pablo.molins@gmail.com
 
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,44 +24,46 @@
 
 #include "tape.h"
 #include "state_machine.h"
+#include "io.h"
 
 int main(int argc, char const *argv[])
 {
-	int i;
-	int help = 0, debug = 0;
+	ARGUMENTS* arg;
 	p_state_function func = ini;
 	Tape* tape;
 
 	/* Checking the input arguments */
-	for (i = 1; i < argc; i++)
-	{
-		if (strcmp(argv[i], "-d") == 0)
-			debug = 1;
-		else
-		{
-			fprintf(stderr, "~~~~~~~ERROR: %s it's not a valid argument\n", argv[i]);
-			help = 1;
-		}
-	}
+	arg = ini_arguments(argc, argv);
 
-	if (help == 1)
+	if (arg == NULL)
+		exit(1);
+
+	if (arg->help == 1)
 	{
-		fprintf(stderr, "~~~~~~~HELP: This is a Universal Turing MaChine, coded by Pablo Molins.\n");
-		fprintf(stderr, "~~~~~~~HELP: More information soon.\n");
+		printf("~~~~~~~HELP: This is a Universal Turing MaChine, coded by Pablo Molins.\n");
+		printf("~~~~~~~HELP: It's distributed under a GNU General Public License.\n");
+		printf("~~~~~~~HELP: Usage: ./utmc [options]\n");
+		printf("~~~~~~~HELP: Options:\n");
+		printf("~~~~~~~HELP:\t-i <input_file>\tIf not file is specified, default name is 'ini.utmc'\n");
+		printf("~~~~~~~HELP:\t-o <output_file>\tIf not file is specified, default name is 'end.utmc'\n");
+		printf("~~~~~~~HELP:\t-d\tDebbug mode\n");
+		printf("~~~~~~~HELP:\t-h, --help\tThis help it's shown.\n");
 		exit(0);
 	}
 
+
+	/* The MaChine starts */
 	tape = new_tape();
 
 	if (tape == NULL)
 	{
-		fprintf(stderr, "~~~~~~~ERROR: Something went wrong... new_tape() didn`t work\n");
+		fprintf(stderr, "~~~~~~~ERROR: Something went wrong... new_tape() didn't work.\n");
 		exit(1);
 	}
 
 	ini_tape(tape, "10000000000000MY00X00000X01110Y");
 
-	if (debug == 1)
+	if (arg->debug == 1)
 	{
 		while (func != NULL)
 		{

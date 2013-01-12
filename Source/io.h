@@ -1,7 +1,7 @@
 /**************************************************************
 
 	Universal Turing MaChine
-	Copyright (C) 2013  Pablo Molins
+	Copyright (C) 2013  Pablo Molins - pablo.molins@gmail.com
 
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,6 +21,20 @@
 #ifndef _IO_H
 #define _IO_H
 
-	int whatever ();
+	#include <stdlib.h>
+	#include <stdio.h>
+	#include <string.h>
+	#include <assert.h>
+
+	typedef struct 
+	{
+		int help;
+		int debug;
+		char* input_file;
+		char* output_file;
+	}ARGUMENTS;
+
+	ARGUMENTS* ini_arguments(int argc, char const *argv[]);
+	void end_arguments(ARGUMENTS* arg);
 
 #endif
