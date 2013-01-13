@@ -48,6 +48,7 @@ int main(int argc, char const *argv[])
 		printf("~~~~~~~HELP:\t-o <output_file>\tIf not file is specified, default name is 'end.utmc'\n");
 		printf("~~~~~~~HELP:\t-d\tDebbug mode\n");
 		printf("~~~~~~~HELP:\t-h, --help\tThis help it's shown.\n");
+		end_arguments(arg);
 		exit(0);
 	}
 
@@ -79,6 +80,7 @@ int main(int argc, char const *argv[])
 		}
 	}
 
+	end_arguments(arg);
 	end_tape(tape);
 
 	return 0;

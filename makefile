@@ -25,6 +25,8 @@ SOURCE = ./Source/
 TEST = ./Test/
 BUILD = ./Build/
 
+
+
 utmc.app: $(BUILD)utmc.o $(BUILD)tape.o $(BUILD)localizer.o $(BUILD)copier.o $(BUILD)head_mover.o $(BUILD)io.o
 	@echo "#---------------------------"
 	@echo "# Building $@"
@@ -73,6 +75,9 @@ $(BUILD)test_tape.o: $(TEST)test_tape.c
 
 
 # The other stuff
+
+config:
+	mkdir Build
 
 .PHONY: clean
 clean:
