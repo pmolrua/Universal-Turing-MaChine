@@ -18,8 +18,7 @@
 
 **************************************************************/
 
-#include "io.h"	
-
+#include "io.h"
 
 ARGUMENTS* ini_arguments(int argc, char const *argv[])
 {
@@ -98,11 +97,13 @@ void end_arguments(ARGUMENTS* arg)
 	free(arg);
 }
 
+/* return value must be freed after the call */
 char* read_tape_from_file(ARGUMENTS* arg)
 {
 	char* tape = NULL;
 	char buf[BUFSIZ];
 	FILE* f;
+	char* temp;
 
 	assert(arg != NULL);
 	assert(arg->input_file != NULL);
@@ -112,19 +113,53 @@ char* read_tape_from_file(ARGUMENTS* arg)
 	if (f == NULL)
 		return NULL;
 
+	/* This loop looks for a valid line. No comments or empty lines */
+	do
+		if (fgets(buf, BUFSIZ, f) == NULL)
+			return NULL;
+	while(buf[0] == '#' || buf[0] == '\n');
+
+	/*eprintf("IO: Line %s\n", buf);*/
+
+	temp = strtok(buf, "\n\r\t ");
+
+	tape = (char *) malloc(strlen(temp) + 2);
+
+	if (tape == NULL)
+		return NULL;
+
+	tape = strcpy(tape, temp);
+
+	/* If the file is a single line one, then we have finish */
+	if (strstr(tape, "Y") != NULL)
+		return tape;
+
+	strcat(tape, "Y");
+
+	/* Now we look for the header and initial state and then all the states */
 	while(fgets(buf, BUFSIZ, f) != NULL)
 	{
-		int i, j;
-		int buf_tam = strlen(buf);
+		if (buf[0] == '#' || buf[0] == '\n')
+			continue;
 
-		for (i = 0, j = 0; i < buf_tam; i++)
-		{
+		/*eprintf("IO: Line %s\n", buf);*/
 
-		}
+		temp = strtok(buf, "\n\r\t ");
 
+		tape = (char *) realloc(tape, strlen(temp) + strlen(tape) + 2);
+
+		if (tape == NULL)
+			return NULL;
+
+		strcat(tape, temp);
+		strcat(tape, "X");
 	}
 
+	/* We are done, and so we change the last 'X' with the 'Y' */
 
+	tape[strlen(tape) - 1] = 'Y';
+
+	/*eprintf("IO: End tape: %s\n", tape);*/
 
 	fclose(f);
 

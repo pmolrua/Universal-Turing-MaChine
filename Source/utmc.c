@@ -31,6 +31,7 @@ int main(int argc, char const *argv[])
 	ARGUMENTS* arg;
 	p_state_function func = ini;
 	Tape* tape;
+	char* s_tape;
 
 	/* Checking the input arguments */
 	arg = ini_arguments(argc, argv);
@@ -59,10 +60,26 @@ int main(int argc, char const *argv[])
 	if (tape == NULL)
 	{
 		fprintf(stderr, "~~~~~~~ERROR: Something went wrong... new_tape() didn't work.\n");
+		end_arguments(arg);
 		exit(1);
 	}
 
-	ini_tape(tape, "10000000000000MY00X00000X01110Y");
+	if ((s_tape = read_tape_from_file(arg)) == NULL)
+	{
+		fprintf(stderr, "~~~~~~~ERROR: Something went wrong... read_tape_from_file() didn't work.\n");
+		end_arguments(arg);
+		end_tape(tape);
+		exit(1);
+	}
+
+	free(s_tape);
+
+	if (ini_tape(tape, s_tape) == ERR)
+	{
+		end_arguments(arg);
+		end_tape(tape);
+		exit(1);
+	}
 
 	if (arg->debug == 1)
 	{

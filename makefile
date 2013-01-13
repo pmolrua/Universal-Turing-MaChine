@@ -27,7 +27,7 @@ BUILD = ./Build/
 
 
 
-utmc.app: $(BUILD)utmc.o $(BUILD)tape.o $(BUILD)localizer.o $(BUILD)copier.o $(BUILD)head_mover.o $(BUILD)io.o
+utmc.out: $(BUILD)utmc.o $(BUILD)tape.o $(BUILD)localizer.o $(BUILD)copier.o $(BUILD)head_mover.o $(BUILD)io.o
 	@echo "#---------------------------"
 	@echo "# Building $@"
 	$(CC) $(CFLAGS) -o $@ $(BUILD)utmc.o $(BUILD)tape.o $(BUILD)localizer.o $(BUILD)copier.o $(BUILD)head_mover.o $(BUILD)io.o
@@ -63,9 +63,9 @@ $(BUILD)io.o: $(SOURCE)io.c
 
 # Tests
 
-tests: test_tape.exe
+tests: test_tape.out
 
-test_tape.app: $(BUILD)tape.o $(BUILD)test_tape.o
+test_tape.out: $(BUILD)tape.o $(BUILD)test_tape.o
 	@echo "#---------------------------"
 	$(CC) $(CFLAGS) -o $@ $(BUILD)tape.o $(BUILD)test_tape.o
 
@@ -81,5 +81,5 @@ config:
 
 .PHONY: clean
 clean:
-	rm -f -r *.o 
+	rm -f -r *.o *.out
 

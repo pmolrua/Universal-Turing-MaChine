@@ -36,5 +36,7 @@
 
 	ARGUMENTS* ini_arguments(int argc, char const *argv[]);
 	void end_arguments(ARGUMENTS* arg);
+	/* return value must be freed after the call */
+	char* read_tape_from_file(ARGUMENTS* arg);
 
 #endif
